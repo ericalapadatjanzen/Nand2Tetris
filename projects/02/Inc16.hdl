@@ -16,3 +16,5 @@ CHIP Inc16 {
 Add16(a=in, b[0]= true, b[1..15]=false,  out= out);
 
 }
+
+//this was the lazy way, better way would have been to use half adders
