@@ -14,116 +14,60 @@
 
 
 
+
 (START)
-
-
-//Initalize values//
-
-    @SCREEN
-    D=A  // D = 16384
-    @pointer
-    M=D  // RAM[16] = 16384
-
-//keyboard memory map location RAM[24576]
-
-
-    @KBD
+  @colour
+  M=0 //colour value is 0
+(RESET)
+    @KBD //keyboard memory map location RAM[24576]
     D=M // D = keyboard (R24576) is value of 0 unless 1 if key pressed
-
     @WHITE
     D;JEQ // no key pressed, screen to go white
-
     @BLACK
     D;JGT //key pressed, screen to go black
-
 (BLACK)
-
     @colour
-    M=0  //set colour value to 0
-
+    M=0 //set colour value to 0
+    @colour
+    D=M
+    @SCREEN
+    A=A+D
+    M=-1 //fill black
     @FILL
-    0;JMP //goto FILL
-
+    0;JMP //goto fill
 (WHITE)
-
     @colour
-    M=-1  //set colour value to -1
-
-    @FILL
-    0;JMP //goto FILL
-
+    D=M
+    @SCREEN
+    A=A+D
+    M=0
 (FILL)
 
 
-    @pointer
-    D=M  //D = RAM[16384]
+    @SCREEN
+    D = M
 
     @KBD
-    D=D - M // 16384 - 0 or 1
+    D = A - D //  24576 - 16385
 
     @START
-    D;JEQ  // goto start if D = 0  - key not pressed
-
-    @colour
-    D = M  //D = 0 or - 1
-
-    @pointer
-    A = M  //
-    M = D  //
-
-    @pointer
-    M = M + 1
-
-    @FILL
-    0;JMP //goto fill
-
-
-
-
-
-
-
-
-
-
-
+    D;JEQ // goto start if D = 0
+    @RESET
+    0;JMP //goto reset
 
 
    // @16384
    // D = M  // D = R16384
-
     // D = D + 1 // D = R16385
-
-
-
    // @24757
    // D=M // D = 24757
-
-   // @addr
-   // D = D + A  // 24757 + 0 or -1
-
-   // @16384
-   // D =
-
-
-
-
-
-
-
-
-
-
-
+   // @add
     //@row
     //M=255
     //8160
-
     //@colum
     //M=511
     //32
-
      // screen start RAM[16384]
-
      // screen end RAM[24757]
      // 8192 words of memory each screen word controls 16 pixels

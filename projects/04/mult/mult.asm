@@ -21,7 +21,7 @@
 (LOOP)
 
     @0
-    D=M   // D=R0\
+    D=M   // D=R0
     @END
     D;JLE  // if D = 0 goto END
 
